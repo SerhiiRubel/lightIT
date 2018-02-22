@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LightIT</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+    input {
+      width: 400px;
+      height:100px;
+      text-align: center;
+      font-size: 50px;
+    }
+  </style>
+  <body>
+    <input class='number' type='text' placeholder='Введите число'>
+  </body>
+  <script type='text/javascript'>
+    const array = [1, 6, 5, 2, 7, 5, 1, 4, 3];
+    const result = [];
+    var input = document.querySelector('.number');
+    input.oninput = ( e => searchNumbers(e) );
+
+    // Логика нахождения пары чисел
+    function searchNumbers (e) {
+      clearNumbers();
+      var number = e.target.value;
+      for(var i = 0; i < array.length; i++) {
+        for(var j = i + 1; j < array.length; j++) {
+          if(array[i] + array[j] == number && !result.includes(array[i])) {
+              result.push(array[i],array[j]);
+              showNumbers(array[i], array[j], number);
+          }
+        }
+      }
+    }
+
+    // Выводим найденные пары чисел
+    function showNumbers (i, j, number) {
+      let p = document.createElement('p');
+      p.textContent = `Пара чисел ${ i } + ${ j } = ${ number }`;
+      document.body.appendChild(p);
+    }
+
+    // Очищаем массив result(найденные пары) и убираем все p, которые были добавлены.
+    function clearNumbers () {
+      result.splice(0,result.length);
+      let allP = document.querySelectorAll('p');
+      for (var i = 0; i < allP.length; i++) {
+        allP[i].remove();
+      }
+    }
+
+  </script>
+</html>
